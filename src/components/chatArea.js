@@ -1,51 +1,65 @@
 import SingleText from "./singleText"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import avatar from '../assets/avatar.png'
 
 
 const ChatArea = ({currentChat_, handleSendMessage}) => {
 
+    
+
     const [textMessage, setTextMessage] = useState('');
     const [currentChat, setCurrentChat] = useState(currentChat_);
+    const [messages, setMessages] = useState(currentChat_.messages.sort((a, b) => {
+        console.log("Haha")
+        return new Date(a.date) - new Date(b.date)
+      }));
 
     const sendMessage = () => {
-        let k = currentChat.messages;
-        let timeofSend = new Date().toString();
-        handleSendMessage({...currentChat, messages: [
+        let k = messages;
+        let timeofSend = new Date().toISOString();
+        handleSendMessage({...currentChat_, messages: [
             ...k, {
-                id: k.length,
+                id: k.length + 1,
                 text: textMessage,
                 isUserText: true,
                 date: timeofSend
             }
         ]})
 
-        setCurrentChat((prev) => {
-            return {...prev, messages: [
-                ...k, {
+        setMessages((prev) => {
+            return [
+                ...prev, {
                     id: k.length,
                     text: textMessage,
                     isUserText: true,
                     date: timeofSend
                 }
-            ]}
+            ]
         })
 
         setTextMessage('')
 
     }
 
+    useEffect(()=> {
+        setCurrentChat(currentChat_)
+        setMessages(currentChat_.messages.sort((a, b) => {
+            console.log("Haha")
+            return new Date(a.date) - new Date(b.date)}))
+    }, [currentChat_])
+
     return (
         <section>
             
             <div className= "current-chat">
                 <img src= {avatar} alt= "Profile"/>
-                <h1>{currentChat.contactName}</h1>
+                <h1>{currentChat_.contactName}</h1>
             </div>
             <div className= "chat-area">
                 <div className= "messages">
-                    {currentChat.messages.map((message, idx) => {
-                        return <SingleText message= {message.text} isUserText= {message.isUserText} date= {message.date} />
+                    {messages.map((message, idx) => {
+                        return <div key={idx}>
+                        <SingleText message= {message.text} isUserText= {message.isUserText} date= {message.date} /></div>
                     })}
                 </div>
             </div>

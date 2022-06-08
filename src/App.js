@@ -8,7 +8,14 @@ import { user, chats } from './data'
 
 function App() {
 
-  let chatsFromStorage = localStorage.getItem(`chatAway/${user.username}`) === null ? chats : JSON.parse(localStorage.getItem(`chatAway/${user.username}`)).sort((a, b) => a - b)
+  let chatsFromStorage = localStorage.getItem(`chatAway/${user.username}`) === null ? chats : JSON.parse(localStorage.getItem(`chatAway/${user.username}`)).sort((a, b) => a.id - b.id)
+
+  for (let chat of chatsFromStorage) {
+    chat.messages.sort((a, b) => {
+      console.log("Haha")
+      return new Date(a.date) - new Date(b.date)
+    })
+  }
 
 
   const [allContacts, setAllContacts] = useState(chatsFromStorage);
@@ -18,7 +25,13 @@ function App() {
   const setSelectedChat = (id_) => {
     let p = allContacts.filter((t) => t.id === id_);
     console.log(p)
-    setCurrentChat(p)
+    // p[0].messages.sort((a, b) => {
+    //   console.log("Haha")
+    //   return new Date(a.date) - new Date(b.date)
+    // })
+    console.log(p[0])
+    localStorage.setItem('testSort', JSON.stringify(p[0].messages))
+    setCurrentChat(p[0])
   }
 
 
@@ -48,7 +61,7 @@ function App() {
 
       <main>
         <ChatListBar userData= {user}>
-          <ChatList chats = {allContacts} sendSelectedChat= {(p) => setSelectedChat(p)}/>
+          <ChatList chats = {allContacts} sendSelectedChat= {setSelectedChat}/>
         </ChatListBar>
         <ChatArea currentChat_= {currentChat} handleSendMessage= {sendChat}/>
       </main>

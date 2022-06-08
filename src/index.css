@@ -16,6 +16,7 @@ main {
   height: 95vh;
   display: flex;
   flex-direction: row;
+  align-items: center;
 
 }
 
@@ -110,15 +111,17 @@ section{
 }
 
 .current-chat h1 {
-  font-size: 3rem;
+  font-size: 2rem;
   margin: 0 2rem;
   color: white;
 
 }
 
 .chat-area {
-  height: 90%;
+  height: 85%;
   background: lavender;
+  padding: 0 10px 20px 10px;
+  overflow: scroll;
 
 }
 
@@ -126,17 +129,15 @@ section{
   box-sizing: border-box;
   background: transparent;
   width: 90%;
-  height: 100%;
   margin: auto;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 20px 10px;
 }
 
 .text-area {
-  min-height: 5rem;
   margin: 10px 0;
+  box-sizing: border-box;
+  padding: 2px;
 }
 
 .text-box {
@@ -149,7 +150,9 @@ section{
   float: left;
   text-align: left;
   padding: 0 20px;
+  box-sizing: border-box;
 }
+
 
 .user-text {
   float: right !important;
@@ -157,7 +160,6 @@ section{
 }
 
 .chat-input {
-  height: 10%;
   width: 95%;
   margin: auto;
   display: flex;
