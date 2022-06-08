@@ -20,6 +20,15 @@ main {
 
 }
 
+#login {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(45deg, rgb(99, 8, 173), lavender);
+}
+
 aside {
   height: 95vh;
   width: 30rem;
@@ -186,6 +195,93 @@ section{
   font-size: large;
   font-weight: bold;
   color: white;
+  cursor: pointer;
+}
+
+
+.intro {
+  color: white;
+  text-align: center;
+}
+
+.intro h1 {
+  font-size: 5rem;
+}
+
+.intro span {
+  color: #282c34;
+}
+
+.icons {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 100%;
+
+}
+
+.icons img:nth-child(1) {
+  height: 120px;
+  width: 120px;
+}
+
+.icons img:nth-child(2) {
+  height: 150px;
+  width: 150px;
+}
+
+.icons img:nth-child(3) {
+  height: 70px;
+  width: 70px;
+}
+
+.icons #bottom {
+  height: 20%;
+  aspect-ratio: 1;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  min-height: 5rem;
+  width: 50%;
+  margin: 10px auto;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.actions input {
+  width: 80%;
+  height: 4rem;
+  border-radius: 10px;
+  font-size: 3rem;
+  background-color: transparent;
+}
+
+.actions button {
+  background-color: rgb(99, 8, 173);
+  box-shadow: 2px 2px 8px 2px #888888;
+  width: 50%;
+  height: 4rem;
+  color: white;
+  border-radius: 10px;
+  border: 0;
+  margin: 20px auto;
+  cursor: pointer;
+}
+
+#log-out {
+  background-color: aliceblue;
+  box-shadow: 2px 2px 8px 2px #888888;
+  width: 5rem;
+  height: 2rem;
+  color: #282c34;
+  border-radius: 5px;
+  border: 0;
+  margin: 0 40px 0 0;
   cursor: pointer;
 }
 

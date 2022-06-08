@@ -9,7 +9,7 @@ const ChatListBar = (props) => {
         <aside>
             <div className= "intro-page">
                 <img src= {avatar}/>
-                <h3>Welcome<br/><span>{props.userData.username}</span></h3>
+                <h3>Welcome<br/><span>{props.username}</span></h3>
             </div>
             <div>
                 <input type= "text" placeholder= 'Search for a Contact' value= {searchKey} onChange= {(e) => setSearchKey(e.target.value)} />

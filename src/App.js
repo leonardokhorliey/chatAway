@@ -3,8 +3,10 @@ import './App.css';
 import ChatListBar from './components/chatListBar';
 import ChatList from './components/chatList';
 import ChatArea from './components/chatArea';
+import Home from './components/home';
 import { useState, useEffect } from 'react';
-import { user, chats } from './data'
+import { user, chats } from './data';
+
 
 function App() {
 
@@ -18,8 +20,10 @@ function App() {
   }
 
 
+  const [userAccount, setUserAccount] = useState(user.username);
   const [allContacts, setAllContacts] = useState(chatsFromStorage);
   const [currentChat, setCurrentChat] = useState(chatsFromStorage[0]);
+  const [loggedIn, setLoggedIn] = useState(false)
 
 
   const setSelectedChat = (id_) => {
@@ -44,27 +48,59 @@ function App() {
     console.log('I am a rat')
   }
 
-  useEffect(()=> {
-    
-    console.log("Big Fish caught")
+  const handleLogIn = (p) => {
+    setUserAccount(p)
+    let chatsAvailable = localStorage.getItem(`chatAway/${p}`) === null ? chats : JSON.parse(localStorage.getItem(`chatAway/${user.username}`)).sort((a, b) => a.id - b.id)
+    setAllContacts(chatsAvailable)
+    setCurrentChat(chatsAvailable[0])
+    console.log('Logged In')
+    localStorage.setItem(`chatAway`, p)
+    setLoggedIn(true)
+  }
 
-  }, [currentChat])
+  const handleLogOut = () => {
+    setLoggedIn(false)
+    setUserAccount('')
+  }
+
+  useEffect(()=> {
+    let availableUser = localStorage.getItem(`chatAway`)
+
+    if (availableUser !== null) {
+      setUserAccount(availableUser)
+
+      let chatsAvailable = localStorage.getItem(`chatAway/${availableUser}`) === null ? chats : JSON.parse(localStorage.getItem(`chatAway/${user.username}`)).sort((a, b) => a.id - b.id)
+      setAllContacts(chatsAvailable)
+      setCurrentChat(chatsAvailable[0])
+
+      setLoggedIn(true)
+      
+    }
+    
+
+  }, [])
 
   
 
 
   return (
     <div className="App">
-      <header className="App-header">
+      {!loggedIn && <Home setCredentials= {handleLogIn}/>}
+      {loggedIn && <>
+        <header className="App-header">
+        <p></p>
         ChatAway
+        <button id= "log-out" onClick= {handleLogOut}>
+          Sign Out
+        </button>
       </header>
 
       <main>
-        <ChatListBar userData= {user}>
+        <ChatListBar username= {userAccount}>
           <ChatList chats = {allContacts} sendSelectedChat= {setSelectedChat}/>
         </ChatListBar>
         <ChatArea currentChat_= {currentChat} handleSendMessage= {sendChat}/>
-      </main>
+      </main></>}
     </div>
   );
 }
