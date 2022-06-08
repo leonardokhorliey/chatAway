@@ -1,9 +1,13 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import avatar from '../assets/avatar.png'
 
 const ChatListBar = (props) => {
 
     const [searchKey, setSearchKey] = useState('')
+
+    useEffect(()=> {
+        props.handleSearch(searchKey)
+    }, [searchKey])
 
     return (
         <aside>

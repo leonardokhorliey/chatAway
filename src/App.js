@@ -29,12 +29,6 @@ function App() {
   const setSelectedChat = (id_) => {
     let p = allContacts.filter((t) => t.id === id_);
     console.log(p)
-    // p[0].messages.sort((a, b) => {
-    //   console.log("Haha")
-    //   return new Date(a.date) - new Date(b.date)
-    // })
-    console.log(p[0])
-    localStorage.setItem('testSort', JSON.stringify(p[0].messages))
     setCurrentChat(p[0])
   }
 
@@ -44,7 +38,7 @@ function App() {
 
     let otherChats = allContacts.filter((t) => t.id !== chatId)
     setAllContacts([...otherChats, p])
-    localStorage.setItem(`chatAway/${user.username}`, JSON.stringify([...otherChats, p]))
+    localStorage.setItem(`chatAway/${userAccount}`, JSON.stringify([...otherChats, p]))
     console.log('I am a rat')
   }
 
@@ -61,6 +55,15 @@ function App() {
   const handleLogOut = () => {
     setLoggedIn(false)
     setUserAccount('')
+  }
+
+  const searchChats = (phrase) => {
+    if (localStorage.getItem(`chatAway/${userAccount}`) === null) {
+      setAllContacts(chats.filter((t) => t.contactName.toLowerCase().includes(phrase.toLowerCase())));
+      return;
+    }
+    setAllContacts(JSON.parse(localStorage.getItem(`chatAway/${userAccount}`)).filter((t) => t.contactName.toLowerCase().includes(phrase.toLowerCase()))
+    )
   }
 
   useEffect(()=> {
@@ -96,7 +99,7 @@ function App() {
       </header>
 
       <main>
-        <ChatListBar username= {userAccount}>
+        <ChatListBar username= {userAccount} handleSearch= {searchChats}>
           <ChatList chats = {allContacts} sendSelectedChat= {setSelectedChat}/>
         </ChatListBar>
         <ChatArea currentChat_= {currentChat} handleSendMessage= {sendChat}/>
